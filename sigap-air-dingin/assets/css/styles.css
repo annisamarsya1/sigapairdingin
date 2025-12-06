@@ -1,0 +1,253 @@
+/* ====== Global Theme for Sigap Air Dingin ====== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top left, #e3f2fd 0, #f5f7fb 45%, #eef2f7 100%);
+    color: #233143;
+}
+
+a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0b5ed7;
+    text-decoration: underline;
+}
+
+/* ====== Navbar & Footer ====== */
+.navbar {
+    box-shadow: 0 8px 18px rgba(15, 63, 125, 0.16);
+    backdrop-filter: blur(10px);
+}
+
+.navbar .navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    border-radius: 999px;
+    padding-inline: 0.9rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: #fff;
+}
+
+.footer {
+    background-color: #0d1b2a;
+    color: #adb5bd;
+    box-shadow: 0 -4px 14px rgba(15, 63, 125, 0.25);
+}
+
+.footer .text-muted {
+    color: #ced4da !important;
+}
+
+/* ====== Cards & Sections ====== */
+.card {
+    border: none;
+    border-radius: 1.1rem;
+    box-shadow: 0 16px 40px rgba(15, 63, 125, 0.16);
+    overflow: hidden;
+    background: #ffffffee;
+    backdrop-filter: blur(6px);
+}
+
+.card-header,
+.section-header {
+    background: linear-gradient(135deg, #0d6efd, #0b9ad1);
+    color: #fff;
+    padding: 1rem 1.5rem;
+}
+
+.section-header h4,
+.card-header h4 {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 0;
+}
+
+.card-body {
+    padding: 1.5rem 1.75rem;
+}
+
+.card-footer {
+    background-color: #f8f9fb;
+}
+
+/* ====== Forms ====== */
+.form-control,
+.form-select {
+    border-radius: 0.8rem;
+    border: 1px solid #ced4da;
+    padding: 0.55rem 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.18rem rgba(13, 110, 253, 0.2);
+}
+
+label.form-label {
+    font-weight: 500;
+    color: #1f2933;
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.invalid-feedback {
+    font-size: 0.8rem;
+}
+
+/* ====== Buttons ====== */
+.btn {
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.55rem 1.2rem;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #1a91ff);
+    border: none;
+    box-shadow: 0 12px 22px rgba(13, 110, 253, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 26px rgba(13, 110, 253, 0.45);
+    background: linear-gradient(135deg, #0b5ed7, #1376ff);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #0b9ad1, #29b6f6);
+    border: none;
+    box-shadow: 0 10px 20px rgba(11, 154, 209, 0.32);
+}
+
+.btn-info:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #0889bb, #1da5e6);
+}
+
+.btn-success {
+    border: none;
+    box-shadow: 0 10px 20px rgba(25, 135, 84, 0.32);
+}
+
+.btn-success:hover {
+    transform: translateY(-1px);
+}
+
+/* ====== Tables ====== */
+.table {
+    border-radius: 1rem;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.table thead {
+    background: linear-gradient(135deg, #0d6efd, #0b9ad1);
+    color: #fff;
+}
+
+.table thead th {
+    border: none;
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background-color: #f5f8ff;
+}
+
+/* ====== Auth Pages (Login / Register) ====== */
+body.bg-light {
+    background: radial-gradient(circle at top left, #e3f2fd 0, #f5f7fb 45%, #eef2f7 100%) !important;
+}
+
+.auth-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 10%, #e3f2ff, #0d6efd);
+    color: #fff;
+    box-shadow: 0 14px 30px rgba(13, 110, 253, 0.45);
+    margin-bottom: 0.35rem;
+}
+
+/* ====== Map & Geo Components ====== */
+#map,
+#heatMap,
+#risikoMap {
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 16px 35px rgba(15, 63, 125, 0.25);
+    border: 3px solid rgba(13, 110, 253, 0.18);
+}
+
+#preview img {
+    border-radius: 0.75rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.4rem;
+    box-shadow: 0 6px 14px rgba(15, 63, 125, 0.3);
+}
+
+/* ====== Layout Utilities ====== */
+.page-title {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #102a43;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-title i {
+    color: #0d6efd;
+}
+
+.filter-bar {
+    background-color: #f8f9fb;
+    border-radius: 1rem;
+    padding: 0.9rem 1rem;
+    box-shadow: 0 10px 26px rgba(15, 63, 125, 0.15);
+}
+
+/* ====== Responsive Tweaks ====== */
+@media (max-width: 767.98px) {
+    .navbar .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .card-body {
+        padding: 1.25rem 1.2rem;
+    }
+
+    .filter-bar .row > * {
+        margin-bottom: 0.5rem;
+    }
+}
+
+

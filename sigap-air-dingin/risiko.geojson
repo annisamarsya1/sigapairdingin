@@ -1,0 +1,13 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name": "Zona Rawan Longsor"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[113.9, -0.8], [114.0, -0.8], [114.0, -0.7], [113.9, -0.7]]]
+      }
+    }
+  ]
+}
