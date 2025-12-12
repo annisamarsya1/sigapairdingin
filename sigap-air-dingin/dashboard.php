@@ -7,11 +7,10 @@ include 'db.php';
 
 $lang = isset($_GET['lang']) ? $_GET['lang'] : 'id';
 $texts = [
-    'id' => ['register' => 'Register', 'login' => 'Login', /* tambah semua teks */],
-    'en' => ['register' => 'Register', 'login' => 'Login', /* English */]
+    'id' => ['register' => 'Register', 'login' => 'Login', ],
+    'en' => ['register' => 'Register', 'login' => 'Login', ]
 ];
 
-// Data untuk grafik tren
 $stmt = $pdo->query("SELECT DATE_FORMAT(created_at, '%Y-%m') as bulan, COUNT(*) as count FROM laporan GROUP BY bulan");
 $tren_data = $stmt->fetchAll();
 
