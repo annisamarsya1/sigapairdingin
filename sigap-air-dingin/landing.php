@@ -1,223 +1,355 @@
 <?php
+
+require_once __DIR__ . '/config/app.php';
+require_once __DIR__ . '/config/db.php';
 session_start();
-$lang = isset($_GET['lang']) ? $_GET['lang'] : 'id';
+$lang = $_GET['lang'] ?? 'id';
+
 $texts = [
     'id' => [
-        'title' => 'Sigap Air Dingin',
-        'tagline' => 'Laporkan lebih cepat, tangani lebih tepat.',
-        'subtitle' => 'Platform pelaporan keluhan masyarakat terkait masalah air dan lingkungan di wilayah Air Dingin.',
-        'cta_report' => 'Mulai Lapor',
+        'title' => 'SIGAP AIR DINGIN',
+        'tagline' => 'Laporkan Lebih Cepat, Tangani Lebih Tepat',
+        'subtitle' => 'Sistem Informasi Pelaporan dan Pemetaan Permasalahan Air, Lingkungan, dan Pelayanan Publik di Kelurahan Air Dingin.',
+        'cta_report' => 'Laporkan Kejadian',
         'cta_login' => 'Masuk Dashboard',
         'cta_register' => 'Daftar Akun',
-        'feature_1_title' => 'Pelaporan Cepat',
-        'feature_1_desc' => 'Sampaikan keluhan dan aspirasi Anda dalam hitungan menit, lengkap dengan lokasi dan foto pendukung.',
-        'feature_2_title' => 'Pantau Proses',
-        'feature_2_desc' => 'Lihat status penanganan laporan Anda secara transparan dari tahap diterima hingga selesai.',
-        'feature_3_title' => 'Peta Risiko',
-        'feature_3_desc' => 'Visualisasi titik-titik laporan di peta untuk melihat area dengan potensi risiko tinggi.',
-        'how_title' => 'Bagaimana Cara Kerjanya?',
-        'how_1' => 'Daftar atau masuk ke portal Sigap Air Dingin.',
-        'how_2' => 'Buat laporan baru, lengkapi deskripsi, lokasi, dan lampiran bila perlu.',
-        'how_3' => 'Pantau perkembangan laporan dan terima notifikasi update dari petugas.',
-        'footer' => '&copy; ' . date('Y') . ' Sigap Air Dingin. Dibangun untuk masyarakat Air Dingin.'
-    ],
-    'en' => [
-        'title' => 'Sigap Air Dingin',
-        'tagline' => 'Report faster, respond better.',
-        'subtitle' => 'A reporting platform for citizen complaints about water and environmental issues in Air Dingin.',
-        'cta_report' => 'Start Reporting',
-        'cta_login' => 'Go to Dashboard',
-        'cta_register' => 'Create Account',
-        'feature_1_title' => 'Fast Reporting',
-        'feature_1_desc' => 'Submit your complaints and aspirations in minutes, complete with location and supporting photos.',
-        'feature_2_title' => 'Track Progress',
-        'feature_2_desc' => 'See the handling status of your report transparently from received to resolved.',
-        'feature_3_title' => 'Risk Map',
-        'feature_3_desc' => 'Visualize report points on the map to see areas with higher potential risk.',
-        'how_title' => 'How It Works',
-        'how_1' => 'Register or log in to the Sigap Air Dingin portal.',
-        'how_2' => 'Create a new report, fill in the description, location, and attachments if needed.',
-        'how_3' => 'Track your report progress and receive updates from officers.',
-        'footer' => '&copy; ' . date('Y') . ' Sigap Air Dingin. Built for the people of Air Dingin.'
+        'feature_1_title' => 'Pelaporan Terintegrasi',
+        'feature_1_desc' => 'Pengaduan, aspirasi, dan administrasi dalam satu sistem.',
+        'feature_2_title' => 'Transparan & Terpantau',
+        'feature_2_desc' => 'Pantau status laporan dari awal hingga selesai.',
+        'feature_3_title' => 'Peta Mitigasi',
+        'feature_3_desc' => 'Pemetaan wilayah rawan berbasis laporan masyarakat.',
+        'how_title' => 'Alur Penggunaan',
+        'how_1' => 'Masuk atau daftar akun SIGAP.',
+        'how_2' => 'Buat laporan lengkap dengan lokasi.',
+        'how_3' => 'Pantau tindak lanjut petugas.'
     ]
 ];
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>">
+<html lang="<?= $lang ?>">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $texts[$lang]['title']; ?> - Landing</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Favicon / Logo Kota Sawahlunto -->
+ <link rel="icon" type="image/x-icon" href="/sigap-air-dingin/favicon-new.ico">
+<link rel="shortcut icon" type="image/x-icon" href="/sigap-air-dingin/favicon-new.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/sigap-air-dingin/favicon-new.ico">
+<title><?= $texts[$lang]['title'] ?></title>
+
+<style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:linear-gradient(180deg,#f0f6ff,#eef2f7);
+    color:#1f2a37;
+    padding-top:78px;
+}
+
+/* UTIL */
+.container{max-width:1180px;margin:auto;padding:0 1.2rem}
+.text-center{text-align:center}
+.text-muted{color:#6b7280}
+.section{padding:4.5rem 0}
+.bg-light{background:#f8fafc}
+
+/* NAVBAR */
+.navbar{
+    position:fixed;
+    top:0;width:100%;
+    background:#fff;
+    padding:.5rem 0;
+    box-shadow:0 8px 28px rgba(15,63,125,.12);
+    z-index:1000;
+}
+.navbar .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.navbar-brand{
+    font-weight:800;
+    color:#0d6efd;
+    text-decoration:none;
+}
+.navbar-brand small{
+    display:block;
+    font-size:.72rem;
+    color:#6b7280;
+}
+.navbar-nav{
+    list-style:none;
+    display:flex;
+    gap:.6rem;
+    align-items:center;
+}
+.nav-link{
+    text-decoration:none;
+    font-weight:600;
+    padding:.55rem 1rem;
+    border-radius:999px;
+    color:#1f2a37;
+}
+.nav-link:hover{background:#eef4ff;color:#0d6efd}
+
+/* BUTTON */
+.btn{
+    display:inline-flex;
+    align-items:center;
+    padding:.7rem 1.8rem;
+    border-radius:999px;
+    font-weight:700;
+    text-decoration:none;
+    transition:.2s;
+}
+.btn-primary{
+    background:linear-gradient(135deg,#0d6efd,#1e88ff);
+    color:#fff;
+    box-shadow:0 10px 24px rgba(13,110,253,.35);
+}
+.btn-outline-primary{
+    border:2px solid #0d6efd;
+    color:#0d6efd;
+    background:#fff;
+}
+.btn:hover{transform:translateY(-2px)}
+
+/* HERO */
+.hero{
+    min-height:82vh;
+    display:flex;
+    align-items:center;
+    color:#fff;
+    background:
+      linear-gradient(rgba(15,23,42,.55),rgba(15,23,42,.65)),
+      url('assets/img/ombilin.png') center/cover no-repeat;
+}
+.hero h1{font-size:3rem;font-weight:800;margin-bottom:1rem}
+.hero p{
+    max-width:760px;
+    margin:0 auto 2.2rem;
+    font-size:1.1rem;
+    opacity:.95;
+}
+
+/* GRID */
+.row{display:flex;flex-wrap:wrap;gap:1.6rem}
+.col-4{flex:1 1 calc(33.333% - 1rem)}
+.col-6{flex:1 1 50%}
+@media(max-width:900px){
+    .col-4,.col-6{flex:1 1 100%}
+}
+
+/* CARD */
+.card{
+    background:#fff;
+    border-radius:1.2rem;
+    padding:2rem;
+    box-shadow:0 18px 45px rgba(15,63,125,.14);
+    transition:.25s;
+}
+.card:hover{transform:translateY(-6px)}
+.card h4{margin-bottom:.6rem}
+.card p{line-height:1.6}
+
+/* MAP */
+#riskMapInner{
+    height:420px;
+    border-radius:1.2rem;
+    background:linear-gradient(135deg,#e0ecff,#f8fbff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:600;
+    color:#475569;
+    box-shadow: 0 18px 45px rgba(15,63,125,.14);
+}
+
+
+/* ================= ALUR PENGGUNAAN ================= */
+
+/* Container dipersempit */
+.section.bg-light .container{
+    max-width:960px;
+}
+
+/* Grid dirapatkan */
+.section.bg-light .row{
+    gap:1rem; /* sebelumnya besar */
+}
+
+/* Kolom jangan terlalu melebar */
+.section.bg-light .col-6{
+    flex:1 1 48%;
+}
+
+/* Card alur */
+.section.bg-light .card{
+    padding:1.3rem 1.4rem; /* lebih ringkas */
+    box-shadow:0 10px 22px rgba(0,0,0,.08);
+}
+
+/* Judul alur */
+.section.bg-light h2{
+    margin-bottom:.6rem;
+}
+
+/* List alur */
+.section.bg-light ol{
+    margin-top:.6rem;
+}
+
+/* Isi list */
+.section.bg-light li{
+    margin-bottom:.45rem;
+    line-height:1.45;
+    font-size:.95rem;
+}
+
+/* Tombol dirapatkan */
+.section.bg-light .btn{
+    margin-top:.6rem;
+    padding:.55rem 1.4rem;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .section.bg-light .col-6{
+        flex:1 1 100%;
+    }
+}
+
+</style>
+<link rel="stylesheet" href="assets/css/navbar.css">
 </head>
-<body class="bg-light min-vh-100 d-flex flex-column">
-    <!-- Simple top navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="landing.php?lang=<?php echo $lang; ?>">
-                <div class="auth-logo me-2">
-                    <i class="fas fa-water"></i>
-                </div>
-                <span class="fw-bold">Sigap Air Dingin</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#landingNav" aria-controls="landingNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="landingNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item me-lg-2">
-                        <a class="nav-link" href="#features">Fitur</a>
-                    </li>
-                    <li class="nav-item me-lg-2">
-                        <a class="nav-link" href="#how-it-works"><?php echo $texts[$lang]['how_title']; ?></a>
-                    </li>
-                    <li class="nav-item me-lg-3">
-                        <a class="nav-link" href="peta_risiko.php?lang=<?php echo $lang; ?>">Peta Risiko</a>
-                    </li>
-                    <li class="nav-item me-lg-2">
-                        <a class="btn btn-outline-primary btn-sm" href="login.php?lang=<?php echo $lang; ?>">
-                            <?php echo $texts[$lang]['cta_login']; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary btn-sm ms-lg-2 mt-2 mt-lg-0" href="register.php?lang=<?php echo $lang; ?>">
-                            <?php echo $texts[$lang]['cta_register']; ?>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <!-- Hero section -->
-    <section class="flex-grow-1 d-flex align-items-center py-5">
-        <div class="container">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-6">
-                    <h1 class="display-5 fw-bold mb-3">
-                        <?php echo $texts[$lang]['tagline']; ?>
-                    </h1>
-                    <p class="lead mb-4">
-                        <?php echo $texts[$lang]['subtitle']; ?>
-                    </p>
-                    <div class="d-flex flex-wrap gap-2 mb-3">
-                        <a href="lapor.php?lang=<?php echo $lang; ?>" class="btn btn-primary btn-lg">
-                            <i class="fas fa-exclamation-triangle me-2"></i><?php echo $texts[$lang]['cta_report']; ?>
-                        </a>
-                        <a href="riwayat.php?lang=<?php echo $lang; ?>" class="btn btn-outline-primary btn-lg">
-                            <i class="fas fa-history me-2"></i>Riwayat Laporan
-                        </a>
-                    </div>
-                    <div class="d-flex align-items-center text-muted small">
-                        <i class="fas fa-shield-alt me-2 text-primary"></i>
-                        <span>Data laporan Anda tersimpan aman dan hanya digunakan untuk penanganan resmi.</span>
-                    </div>
+<?php include __DIR__ . '/partials/navbar.php'; ?>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container text-center">
+        <h1><?= $texts[$lang]['tagline'] ?></h1>
+        <p><?= $texts[$lang]['subtitle'] ?></p>
+        <a href="/sigapairdingin/sigap-air-dingin/auth/register.php" class="btn btn-primary"><?= $texts[$lang]['cta_report'] ?></a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="fitur" class="section">
+    <div class="container">
+        <div class="text-center" style="margin-bottom:3rem">
+            <h2 style="font-weight:800">Kenapa SIGAP Air Dingin?</h2>
+            <p class="text-muted">Satu sistem resmi untuk seluruh layanan masyarakat</p>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="card text-center">
+                    <h4><?= $texts[$lang]['feature_1_title'] ?></h4>
+                    <p class="text-muted"><?= $texts[$lang]['feature_1_desc'] ?></p>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card border-0 shadow-lg">
-                        <div class="card-body p-4">
-                            <h5 class="mb-3"><i class="fas fa-map-marked-alt me-2 text-primary"></i>Peta Risiko Sekilas</h5>
-                            <p class="small text-muted">
-                                Lihat gambaran umum titik-titik laporan yang telah masuk untuk mengetahui area yang perlu perhatian khusus.
-                            </p>
-                            <div id="landingMap" style="height: 260px; border-radius: 1rem; overflow: hidden; border: 3px solid rgba(13,110,253,0.18);">
-                                <!-- Map preview via iframe to peta_risiko or static image -->
-                                <iframe src="peta_risiko.php?lang=<?php echo $lang; ?>" title="Peta Risiko" style="border:0;width:100%;height:100%;"></iframe>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-4">
+                <div class="card text-center">
+                    <h4><?= $texts[$lang]['feature_2_title'] ?></h4>
+                    <p class="text-muted"><?= $texts[$lang]['feature_2_desc'] ?></p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card text-center">
+                    <h4><?= $texts[$lang]['feature_3_title'] ?></h4>
+                    <p class="text-muted"><?= $texts[$lang]['feature_3_desc'] ?></p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Features -->
-    <section id="features" class="py-5 bg-white">
-        <div class="container">
-            <div class="text-center mb-4">
-                <h2 class="fw-bold mb-2">Mengapa Menggunakan Sigap Air Dingin?</h2>
-                <p class="text-muted mb-0">Didesain untuk memudahkan masyarakat menyampaikan keluhan dan memantau tindak lanjutnya.</p>
+<!-- HOW -->
+<section class="section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h2 style="font-weight:800"><?= $texts[$lang]['how_title'] ?></h2>
+                <ol class="text-muted" style="margin-top:1rem;padding-left:1.2rem">
+                    <li><?= $texts[$lang]['how_1'] ?></li>
+                    <li><?= $texts[$lang]['how_2'] ?></li>
+                    <li><?= $texts[$lang]['how_3'] ?></li>
+                </ol>
             </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100 text-center">
-                        <div class="card-body">
-                            <div class="auth-logo mb-3 mx-auto">
-                                <i class="fas fa-bolt"></i>
-                            </div>
-                            <h5 class="mb-2"><?php echo $texts[$lang]['feature_1_title']; ?></h5>
-                            <p class="text-muted small mb-0"><?php echo $texts[$lang]['feature_1_desc']; ?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 text-center">
-                        <div class="card-body">
-                            <div class="auth-logo mb-3 mx-auto">
-                                <i class="fas fa-eye"></i>
-                            </div>
-                            <h5 class="mb-2"><?php echo $texts[$lang]['feature_2_title']; ?></h5>
-                            <p class="text-muted small mb-0"><?php echo $texts[$lang]['feature_2_desc']; ?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 text-center">
-                        <div class="card-body">
-                            <div class="auth-logo mb-3 mx-auto">
-                                <i class="fas fa-map"></i>
-                            </div>
-                            <h5 class="mb-2"><?php echo $texts[$lang]['feature_3_title']; ?></h5>
-                            <p class="text-muted small mb-0"><?php echo $texts[$lang]['feature_3_desc']; ?></p>
-                        </div>
-                    </div>
+            <div class="col-6">
+                <div class="card">
+                    <h4>Siap Berpartisipasi?</h4>
+                    <p class="text-muted">Gunakan sistem resmi untuk pelayanan publik.</p>
+                    <a href="register.php" class="btn btn-primary">Daftar</a>
+                    <a href="login.php" class="btn btn-outline-primary">Masuk</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- How it works -->
-    <section id="how-it-works" class="py-5">
-        <div class="container">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-6">
-                    <h2 class="fw-bold mb-3"><?php echo $texts[$lang]['how_title']; ?></h2>
-                    <ol class="text-muted">
-                        <li class="mb-2"><?php echo $texts[$lang]['how_1']; ?></li>
-                        <li class="mb-2"><?php echo $texts[$lang]['how_2']; ?></li>
-                        <li class="mb-2"><?php echo $texts[$lang]['how_3']; ?></li>
-                    </ol>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="mb-2"><i class="fas fa-user-check me-2 text-primary"></i>Siap untuk mulai?</h5>
-                            <p class="text-muted small mb-3">Buat akun Anda atau langsung masuk jika sudah terdaftar.</p>
-                            <div class="d-flex flex-wrap gap-2">
-                                <a href="register.php?lang=<?php echo $lang; ?>" class="btn btn-primary">
-                                    <i class="fas fa-user-plus me-1"></i><?php echo $texts[$lang]['cta_register']; ?>
-                                </a>
-                                <a href="login.php?lang=<?php echo $lang; ?>" class="btn btn-outline-primary">
-                                    <i class="fas fa-sign-in-alt me-1"></i><?php echo $texts[$lang]['cta_login']; ?>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- MAP -->
+<?php
+// Ambil data pengaduan bencana alam
+$stmt = $pdo->prepare("SELECT id, judul, deskripsi, lokasi 
+                       FROM pengaduan 
+                       WHERE jenis_pengaduan = 'Bencana Alam'");
+$stmt->execute();
+$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 
-    <footer class="footer mt-auto py-3">
-        <div class="container text-center">
-            <span class="text-muted"><?php echo $texts[$lang]['footer']; ?></span>
-        </div>
-    </footer>
+<!-- MAP -->
+<section class="section">
+    <div class="container" style="max-width:920px">
+        <div id="riskMap" style="height:420px; border-radius:1.2rem; box-shadow:0 18px 45px rgba(15,63,125,.14);"></div>
+    </div>
+</section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Leaflet JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+var map = L.map('riskMap').setView([-0.667, 100.783], 13);
+
+// Layer OpenStreetMap
+var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// Layer Satelit ESRI
+var satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri'
+});
+
+// Layer control
+L.control.layers({
+    "Peta Biasa": osmLayer,
+    "Satelit": satelliteLayer
+}).addTo(map);
+
+// Tambahkan marker dari data pengaduan
+<?php foreach($data as $d):
+    if(!empty($d['lokasi'])):
+        $coords = array_map('trim', explode(',', $d['lokasi']));
+        if(count($coords) == 2):
+            $lat = $coords[0];
+            $lng = $coords[1];
+?>
+L.marker([<?= $lat ?>, <?= $lng ?>])
+ .addTo(map)
+ .bindPopup("<b><?= addslashes($d['judul']) ?></b><br><?= addslashes($d['deskripsi']) ?>");
+<?php
+            endif;
+    endif;
+endforeach; ?>
+</script>
+
+
+
+
 </body>
 </html>
-
-

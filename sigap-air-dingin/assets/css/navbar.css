@@ -1,0 +1,93 @@
+/* ================= NAVBAR ================= */
+.navbar{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:#ffffff;
+    z-index:1000;
+    box-shadow:0 6px 24px rgba(0,0,0,.08);
+}
+
+.navbar-container{
+    max-width:1180px;
+    margin:auto;
+    padding:.9rem 1.2rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+/* BRAND */
+.navbar-brand{
+    font-weight:800;
+    color:#0d6efd;
+    text-decoration:none;
+    line-height:1.1;
+}
+.navbar-brand small{
+    display:block;
+    font-size:.72rem;
+    font-weight:600;
+    color:#6b7280;
+}
+
+/* MENU */
+.navbar-menu{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+}
+
+.navbar-menu a{
+    text-decoration:none;
+    color:#1f2937;
+    font-weight:600;
+    padding:.45rem .9rem;
+    border-radius:999px;
+    transition:.2s;
+}
+.navbar-menu a:hover{
+    background:#eef4ff;
+    color:#0d6efd;
+}
+
+/* BUTTON */
+.btn-primary{
+    background:#0d6efd;
+    color:#fff !important;
+    padding:.5rem 1.2rem;
+}
+.btn-outline{
+    border:2px solid #0d6efd;
+    color:#0d6efd !important;
+    padding:.45rem 1.1rem;
+}
+
+/* TOGGLE */
+.navbar-toggle{
+    display:none;
+    font-size:1.4rem;
+    background:none;
+    border:none;
+    cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .navbar-toggle{display:block}
+
+    .navbar-menu{
+        position:absolute;
+        top:100%;
+        right:1rem;
+        background:#fff;
+        flex-direction:column;
+        padding:1rem;
+        border-radius:1rem;
+        box-shadow:0 20px 40px rgba(0,0,0,.15);
+        display:none;
+        min-width:220px;
+    }
+    .navbar-menu.show{display:flex}
+}
