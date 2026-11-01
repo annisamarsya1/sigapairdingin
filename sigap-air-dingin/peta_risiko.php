@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: auth/login.php');
     exit;
 }
 
@@ -119,8 +119,8 @@ body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1f2a37;bac
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// Default map ke Kelurahan Air Dingin, Sawahlunto
-var map = L.map('map').setView([-0.667, 100.783], 13);
+// Default map ke Kelurahan Air Dingin, Sawahlunto, Sumatera Barat
+var map = L.map('map').setView([-0.6671, 100.7831], 15);
 
 // Layer dasar: OpenStreetMap
 var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -139,8 +139,8 @@ var baseMaps = {
 };
 L.control.layers(baseMaps).addTo(map);
 
-// Lokasi pengguna
-map.locate({setView: true, maxZoom: 16});
+// Lokasi pengguna (opsional, tidak menggeser peta jika gagal)
+map.locate({maxZoom: 16});
 
 function onLocationFound(e) {
     var radius = e.accuracy / 2;
@@ -151,7 +151,7 @@ function onLocationFound(e) {
 map.on('locationfound', onLocationFound);
 
 map.on('locationerror', function(e){
-    console.log("Gagal mendapatkan lokasi: " + e.message);
+    console.log("Lokasi tidak tersedia, menampilkan Sawahlunto.");
 });
 
 // Tambah marker laporan bencana

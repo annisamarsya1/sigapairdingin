@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: auth/login.php');
     exit;
 }
 
@@ -155,11 +155,11 @@ body{
             <small>Portal Warga</small>
         </div>
     </div>
-    <a href="index.php?lang=<?= $lang ?>" class="nav-link active">
+    <a href="index.php" class="nav-link active">
         <i class="fas fa-home"></i>Beranda
     </a>
     <?php if ($_SESSION['role'] != 'user'): ?>
-    <a href="dashboard.php?lang=<?= $lang ?>" class="nav-link">
+    <a href="dashboard.php" class="nav-link">
         <i class="fas fa-tachometer-alt"></i><?= $texts[$lang]['dashboard'] ?>
     </a>
     <?php endif; ?>
@@ -179,10 +179,10 @@ body{
 </div>
 
 
-    <a href="riwayat.php?lang=<?= $lang ?>" class="nav-link">
+    <a href="riwayat.php" class="nav-link">
         <i class="fas fa-history"></i><?= $texts[$lang]['riwayat'] ?>
     </a>
-    <a href="peta_risiko.php?lang=<?= $lang ?>" class="nav-link">
+    <a href="peta_risiko.php" class="nav-link">
         <i class="fas fa-map-marked-alt"></i><?= $texts[$lang]['peta_risiko'] ?>
     </a>
 

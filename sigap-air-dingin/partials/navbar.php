@@ -3,7 +3,7 @@
         <!-- Logo + Pemerintah + Nama Aplikasi -->
         <div class="navbar-brand-container" style="display:flex; align-items:center; gap:.8rem;">
             <!-- Logo Sawahlunto -->
-            <img src="<?= BASE_URL ?>sigap-air-dingin/assets/img/logo-sawahlunto.png" alt="Logo Sawahlunto" style="height:40px;">
+            <img src="<?= BASE_URL ?>assets/img/logo-sawahlunto.png" alt="Logo Sawahlunto" style="height:40px;">
 
 
             <!-- Tulisan Pemerintah Kota Sawahlunto + Kelurahan Air Dingin -->
@@ -13,7 +13,7 @@
             </div>
 
             <!-- Nama Aplikasi -->
-            <a href="<?= BASE_URL ?>sigap-air-dingin/landing.php" style="font-weight:800; color:#0d6efd; text-decoration:none; font-size:1.2rem;">
+            <a href="<?= BASE_URL ?>landing.php" style="font-weight:800; color:#0d6efd; text-decoration:none; font-size:1.2rem;">
                 SIGAP AIR DINGIN
             </a>
         </div>
@@ -23,18 +23,18 @@
 
         <!-- Menu -->
         <ul class="navbar-menu" id="navMenu">
-            <li><a href="<?= BASE_URL ?>sigap-air-dingin/landing.php?#hero">Beranda</a></li>
-            <li><a href="<?= BASE_URL ?>sigap-air-dingin/landing.php?#fitur">Fitur</a></li>
-            <li><a href="<?= BASE_URL ?>sigap-air-dingin/landing.php?#alur">Alur</a></li>
-            <li><a href="<?= BASE_URL ?>sigap-air-dingin/landing.php?#peta">Peta</a></li>
+            <li><a href="<?= BASE_URL ?>landing.php?#hero">Beranda</a></li>
+            <li><a href="<?= BASE_URL ?>landing.php?#fitur">Fitur</a></li>
+            <li><a href="<?= BASE_URL ?>landing.php?#alur">Alur</a></li>
+            <li><a href="<?= BASE_URL ?>landing.php?#peta">Peta</a></li>
 
             <li>
-                <a class="btn-outline" href="<?= BASE_URL ?>sigap-air-dingin/auth/login.php">
+                <a class="btn-outline" href="<?= BASE_URL ?>auth/login.php">
                     Masuk Dashboard
                 </a>
             </li>
             <li>
-                <a class="btn-primary" href="<?= BASE_URL ?>sigap-air-dingin/auth/register.php">
+                <a class="btn-primary" href="<?= BASE_URL ?>auth/register.php">
                     Daftar Akun
                 </a>
             </li>

@@ -3,7 +3,7 @@ session_start();
 require 'config/db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: auth/login.php');
     exit;
 }
 
@@ -163,17 +163,37 @@ document.getElementById('jenis').addEventListener('change', function(){
     document.getElementById('jenisLainnyaDiv').style.display = this.value === 'Lainnya' ? 'block' : 'none';
 });
 
-// Leaflet: Lokasi terkini
-var map = L.map('map').setView([-0.7893, 113.9213], 5); // default Indonesia
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+// Koordinat Sawahlunto, Sumatera Barat
+var defaultLat = -0.6671;
+var defaultLng = 100.7831;
+var map = L.map('map').setView([defaultLat, defaultLng], 14);
 
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// Set default ke Sawahlunto dulu
+var marker = L.marker([defaultLat, defaultLng]).addTo(map).bindPopup("Kelurahan Air Dingin, Sawahlunto").openPopup();
+document.getElementById('lokasi').value = defaultLat + ',' + defaultLng;
+
+// Klik peta untuk pindah marker
+map.on('click', function(e) {
+    var lat = e.latlng.lat.toFixed(6);
+    var lng = e.latlng.lng.toFixed(6);
+    marker.setLatLng([lat, lng]).bindPopup("Lokasi dipilih: " + lat + ", " + lng).openPopup();
+    document.getElementById('lokasi').value = lat + ',' + lng;
+});
+
+// Coba ambil lokasi GPS
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position){
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
-        map.setView([lat, lng], 15);
-        L.marker([lat, lng]).addTo(map).bindPopup("Lokasi Anda").openPopup();
+        map.setView([lat, lng], 16);
+        marker.setLatLng([lat, lng]).bindPopup("Lokasi Anda saat ini").openPopup();
         document.getElementById('lokasi').value = lat + ',' + lng;
+    }, function() {
+        // GPS gagal, tetap pakai default Sawahlunto
     });
 }
 </script>

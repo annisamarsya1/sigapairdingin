@@ -1,27 +1,18 @@
 <?php
-include 'db.php';
+require_once __DIR__ . '/admin_guard.php';
+require_once __DIR__ . '/../config/db.php';
 
-$lang = isset($_GET['lang']) ? $_GET['lang'] : 'id';
-$texts = [
-    'id' => ['register' => 'Register', 'login' => 'Login', /* tambah semua teks */],
-    'en' => ['register' => 'Register', 'login' => 'Login', /* English */]
-];
+$id = $_POST['id'];
+$status = $_POST['status'];
+$jenis = $_POST['jenis'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
-    $status = $_POST['status'];
-    $stmt = $pdo->prepare("UPDATE laporan SET status = ? WHERE id = ?");
-    $stmt->execute([$status, $id]);
-    header('Location: dashboard.php');
+$allowed = ['pengaduan','aspirasi','administrasi'];
+if (!in_array($jenis, $allowed)) {
+    die('Invalid table');
 }
 
-// Notifikasi
-if ($laporan['user_id']) {  // Ambil laporan dulu
-    // Serupa seperti atas, mail(...)
-    $id = $_POST['id'];
-    $status = $_POST['status'];
-    $stmt = $pdo->prepare("UPDATE laporan SET status = ? WHERE id = ?");
-    $stmt->execute([$status, $id]);
-    header('Location: dashboard.php');
-}
-?>
+$stmt = $pdo->prepare("UPDATE `$jenis` SET status=? WHERE id=?");
+$stmt->execute([$status, $id]);
+
+header("Location: laporan.php?jenis=$jenis");
+exit;

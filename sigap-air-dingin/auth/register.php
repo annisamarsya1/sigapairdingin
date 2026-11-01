@@ -9,13 +9,36 @@ $texts = [
     'en' => ['title' => 'Register', 'username' => 'Username', 'password' => 'Password', 'role' => 'Role', 'email' => 'Email', 'submit' => 'Register', 'have_account' => 'Already have an account?', 'login' => 'Login']
 ];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $role = $_POST['role'];
-    $email = $_POST['email'];
-    $stmt = $pdo->prepare("INSERT INTO users (username, password, role, email) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$username, $password, $role, $email]);
-    header('Location: login.php?lang=' . $lang);
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+    $role     = $_POST['role'];
+    $email    = trim($_POST['email']);
+    $error    = '';
+
+    // Validasi tidak boleh kosong
+    if (empty($username) || empty($password)) {
+        $error = "Username dan password tidak boleh kosong.";
+    }
+    // Cek username sudah dipakai
+    elseif ($pdo->prepare("SELECT id FROM users WHERE username = ?") && ($chk = $pdo->prepare("SELECT id FROM users WHERE username = ?")) && $chk->execute([$username]) && $chk->fetch()) {
+        $error = "Username '<strong>$username</strong>' sudah digunakan. Silakan pilih username lain.";
+    }
+    // Cek email sudah dipakai (jika diisi)
+    elseif (!empty($email)) {
+        $chkEmail = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $chkEmail->execute([$email]);
+        if ($chkEmail->fetch()) {
+            $error = "Email sudah terdaftar. Silakan gunakan email lain.";
+        }
+    }
+
+    if (empty($error)) {
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        $stmt   = $pdo->prepare("INSERT INTO users (username, password, role, email) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$username, $hashed, $role, $email]);
+        header('Location: login.php?lang=' . $lang . '&registered=1');
+        exit;
+    }
 }
 ?>
 
@@ -129,7 +152,7 @@ i{
 }
 </style>
 
-<link rel="stylesheet" href="assets/css/navbar.css">
+<link rel="stylesheet" href="../assets/css/navbar.css">
 </head>
 <body>
 
@@ -141,6 +164,9 @@ i{
     </div>
 
     <div class="card-body">
+        <?php if (!empty($error)): ?>
+            <div class="alert"><?= $error ?></div>
+        <?php endif; ?>
         <form method="POST" class="needs-validation" novalidate>
             <label class="form-label"><?= $texts[$lang]['username'] ?></label>
             <input type="text" name="username" class="form-control" required>
@@ -151,8 +177,6 @@ i{
             <label class="form-label"><?= $texts[$lang]['role'] ?></label>
             <select name="role" class="form-select" required>
                 <option value="user">Masyarakat</option>
-                <option value="rt_rw">RT/RW</option>
-                <option value="admin">Admin/Dinas</option>
             </select>
 
             <label class="form-label"><?= $texts[$lang]['email'] ?></label>

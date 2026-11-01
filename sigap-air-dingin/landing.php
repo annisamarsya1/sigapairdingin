@@ -32,9 +32,9 @@ $texts = [
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Favicon / Logo Kota Sawahlunto -->
- <link rel="icon" type="image/x-icon" href="/sigap-air-dingin/favicon-new.ico">
-<link rel="shortcut icon" type="image/x-icon" href="/sigap-air-dingin/favicon-new.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="/sigap-air-dingin/favicon-new.ico">
+ <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>favicon-new.ico">
+<link rel="shortcut icon" type="image/x-icon" href="<?= BASE_URL ?>favicon-new.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="<?= BASE_URL ?>favicon-new.ico">
 <title><?= $texts[$lang]['title'] ?></title>
 
 <style>
@@ -44,7 +44,7 @@ body{
     font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
     background:linear-gradient(180deg,#f0f6ff,#eef2f7);
     color:#1f2a37;
-    padding-top:78px;
+    padding-top:60px;
 }
 
 /* UTIL */
@@ -59,7 +59,7 @@ body{
     position:fixed;
     top:0;width:100%;
     background:#fff;
-    padding:.5rem 0;
+    padding:.0.5rem 0;
     box-shadow:0 8px 28px rgba(15,63,125,.12);
     z-index:1000;
 }
@@ -117,18 +117,18 @@ body{
 
 /* HERO */
 .hero{
-    min-height:82vh;
+    min-height:120vh;
     display:flex;
     align-items:center;
     color:#fff;
     background:
       linear-gradient(rgba(15,23,42,.55),rgba(15,23,42,.65)),
-      url('assets/img/ombilin.png') center/cover no-repeat;
+      url("<?= BASE_URL ?>assets/img/ombilin.png") center/cover no-repeat;
 }
 .hero h1{font-size:3rem;font-weight:800;margin-bottom:1rem}
 .hero p{
     max-width:760px;
-    margin:0 auto 2.2rem;
+    margin:0 auto 2rem;
     font-size:1.1rem;
     opacity:.95;
 }
@@ -228,11 +228,11 @@ body{
 <?php include __DIR__ . '/partials/navbar.php'; ?>
 
 <!-- HERO -->
-<section class="hero">
+<section id="hero" class="hero">
     <div class="container text-center">
         <h1><?= $texts[$lang]['tagline'] ?></h1>
         <p><?= $texts[$lang]['subtitle'] ?></p>
-        <a href="/sigapairdingin/sigap-air-dingin/auth/register.php" class="btn btn-primary"><?= $texts[$lang]['cta_report'] ?></a>
+        <a href="<?= BASE_URL ?>auth/register.php" class="btn btn-primary"><?= $texts[$lang]['cta_report'] ?></a>
     </div>
 </section>
 
@@ -268,7 +268,7 @@ body{
 </section>
 
 <!-- HOW -->
-<section class="section bg-light">
+<section id="alur" class="section bg-light">
     <div class="container">
         <div class="row">
             <div class="col-6">
@@ -283,8 +283,8 @@ body{
                 <div class="card">
                     <h4>Siap Berpartisipasi?</h4>
                     <p class="text-muted">Gunakan sistem resmi untuk pelayanan publik.</p>
-                    <a href="register.php" class="btn btn-primary">Daftar</a>
-                    <a href="login.php" class="btn btn-outline-primary">Masuk</a>
+                    <a href="<?= BASE_URL ?>auth/register.php" class="btn btn-primary">Daftar</a>
+                    <a href="<?= BASE_URL ?>auth/login.php" class="btn btn-outline-primary">Masuk</a>
                 </div>
             </div>
         </div>
@@ -302,7 +302,7 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- MAP -->
-<section class="section">
+<section id="peta" class="section">
     <div class="container" style="max-width:920px">
         <div id="riskMap" style="height:420px; border-radius:1.2rem; box-shadow:0 18px 45px rgba(15,63,125,.14);"></div>
     </div>
@@ -313,7 +313,7 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-var map = L.map('riskMap').setView([-0.667, 100.783], 13);
+var map = L.map('riskMap').setView([-0.6671, 100.7831], 15);
 
 // Layer OpenStreetMap
 var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

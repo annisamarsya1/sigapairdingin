@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: auth/login.php');
     exit;
 }
 
@@ -101,7 +101,6 @@ if ($queries) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Favicon / Logo Kota Sawahlunto -->
-<link rel="icon" type="image/png" href="<?= BASE_URL ?>sigap-air-dingin/assets/img/logo-sawahlunto.png" />
 <title><?= $texts[$lang]['riwayat'] ?> - Sigap Air Dingin</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
