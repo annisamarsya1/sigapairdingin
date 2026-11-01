@@ -30,7 +30,7 @@ Sistem ini memungkinkan petugas kelurahan untuk memonitor, menindaklanjuti, dan 
 ## 🖼️ Screenshot
 
 ### Landing Page
-![Landing Page](sigap-air-dingin/assets/img/sawahlunto1.png)
+![Landing Page](sigap-air-dingin/assets/img/swl1.jpeg)
 
 ---
 
